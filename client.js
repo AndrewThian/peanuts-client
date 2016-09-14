@@ -24,14 +24,14 @@ function listPeanuts () {
     url: 'http://localhost:3000/peanuts',
     type: 'GET'
   }).done(function (data) {
-    console.log('success listing peanuts')
+    console.log('success listing peanuts', data)
     $('main').empty()
-    data.forEach(function (elem, index) {
+    data.forEach(function (elem) {
       $('main').append('<div class="card peanut">' +
         '<div class="card-header">' + elem.name + '</div>' +
         '<div class="card-block" >' +
           '<p class="card-text">' + elem.cost + '</p>' +
-            '<div class="btn-group" id="' + index + '">' +
+            '<div class="btn-group" id="' + elem.id + '">' +
               '<button class="btn btn-danger delete-peanut">Delete</button>' +
             '</div>' +
           '</div>' +
