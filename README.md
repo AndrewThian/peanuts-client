@@ -1,3 +1,2 @@
 #Peanuts Client
-
-Connects to the [Peanuts API](https://github.com/jeremiahalex/peanuts-api) and display the results.
+A simple jQuery client that connects to a [Peanuts API](https://github.com/wdi-sg/peanuts-api) and performs CRUD actions.

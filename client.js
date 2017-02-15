@@ -1,31 +1,35 @@
 /* globals $ */
+// var API_PATH = "https://[your-peanut-api-name].herokuapp.com"
+var API_PATH = "https://peanuts-clone-test.herokuapp.com"
+// var API_PATH = "http://localhost:3000" // or you can test locally
+
 $(function () {
   // when the page first loads we want to get all peanuts and display them
   listPeanuts()
 
-  // we add form is clicked we post a request to create a new peanut
+  // when the submit button is clicked on the Add Form, we POST a request to create a new peanut
   $('#add-peanut').submit(function (event) {
     event.preventDefault() // stop the browser reloading
     var data = $('#add-peanut').serialize() // extract the data from the form
     $('#add-peanut').trigger('reset') // clear the form
-    addPeanut(data) // send ajax request
+    addPeanut(data) // call helper function that will send ajax request
   })
 
   // Add a click listener so we can delete peanuts
   $('main').on('click', '.delete-peanut', function () {
-    var id = $(this).parent().attr('id')
-    deletePeanut(id)
+    var id = $(this).parent().attr('id') // find te id of the clicked peanut
+    deletePeanut(id) // call helper function to delete peanut
   })
 })
 
 // GET /peanuts
 function listPeanuts () {
   $.ajax({
-    url: 'http://localhost:3000/peanuts',
+    url: API_PATH + '/peanuts',
     type: 'GET'
   }).done(function (data) {
     console.log('success listing peanuts', data)
-    $('main').empty()
+    $('main').empty() // clear the container of existing peanuts
     data.forEach(function (elem) {
       $('main').append('<div class="card peanut">' +
         '<div class="card-header">' + elem.name + '</div>' +
@@ -45,12 +49,12 @@ function listPeanuts () {
 // POST /peanuts
 function addPeanut (peanutData) {
   $.ajax({
-    url: 'http://localhost:3000/peanuts',
+    url: API_PATH + '/peanuts',
     type: 'POST',
     data: peanutData
   }).done(function (data) {
     console.log('success adding peanut')
-    // if we wanted to be efficient we would just append the new peanut but for ease we will instead just redisplay the list
+    // if we wanted to be efficient we would just append the new peanut but for ease we will instead just re-display the list
     listPeanuts()
   }).fail(function () {
     console.log('error adding peanut')
@@ -60,11 +64,11 @@ function addPeanut (peanutData) {
 // DELETE /peanuts/:id
 function deletePeanut (peanutId) {
   $.ajax({
-    url: 'http://localhost:3000/peanuts/' + peanutId,
+    url: API_PATH + '/peanuts/' + peanutId,
     type: 'DELETE'
   }).done(function (data) {
     console.log('success deleting peanut')
-    // if we wanted to be efficient we would just append the new peanut but for ease we will instead just redisplay the list
+    // if we wanted to be efficient we would just append the new peanut but for ease we will instead just re-display the list
     listPeanuts()
   }).fail(function () {
     console.log('error deleting peanut')
